@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/03 17:34:59 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/06 18:18:06 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,14 @@
 
 typedef struct s_info
 {
-	int	num;
-	MS	t_die;
-	MS	t_eat;
-	MS	t_sleep;
-	int	must_eat;
+	int				num;
+	MS				t_die;
+	MS				t_eat;
+	MS				t_sleep;
+	int				must_eat;
+	pthread_mutex_t	*info_mutex; // 철학자들 감시
+	pthread_mutex_t	*philo_mutex; // 철학자 죽었을 때 0으로 만들어서 출력 불가
+	pthread_mutex_t	*forks; // 포크들
 }	t_info;
 
 typedef struct s_philo
@@ -52,4 +55,6 @@ typedef struct s_philo
 //utils
 size_t	relative_time(size_t time_start);
 int		validate_info(int ac, char **av, t_info *info);
+void	*ft_free(t_info *info);
+
 #endif
