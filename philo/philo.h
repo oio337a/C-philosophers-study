@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/06 18:18:06 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/10 18:24:30 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 
 typedef struct s_info
 {
+	MS				start_time;
 	int				num;
 	MS				t_die;
 	MS				t_eat;
@@ -56,5 +57,6 @@ typedef struct s_philo
 size_t	relative_time(size_t time_start);
 int		validate_info(int ac, char **av, t_info *info);
 void	*ft_free(t_info *info);
+void	*cherhakjas_routine(void *cherhakjas);
 
 #endif

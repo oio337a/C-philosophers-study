@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/06 18:21:13 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/10 18:51:55 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ pthread_mutex_t	*make_forks(t_info *info)
 	if (!forks)
 		return (NULL);
 	while (++i < info->num)
-		pthread_mutex_init(&(info->forks[i]), NULL);
+		pthread_mutex_init(&forks[i], NULL);
 	return (forks);
 }
 
@@ -67,25 +67,55 @@ t_philo	*set_cherhakjas(t_info *info)
 	return (cherhakjas);
 }
 
+// pthread_t	*sit_down_cherhak_man(t_philo *cherhakjas, t_info *info)
+// {
+// 	pthread_t	*table;
+// 	int			i;
+
+// 	table = (pthread_t *)malloc(sizeof(pthread_t) * info->num);
+// 	if (!table)
+// 	{
+// 		ft_free(&info);
+// 		return (NULL);
+// 	}
+// 	i = -1;
+// 	while (++i < info->num)
+// 	{
+// 		table[i] = pthread_create(&table[i], NULL, cherhakjas_routine, &cherhakjas[i]);
+// 	}
+	
+// 	return (table);
+// }
+
+void	only_one_cherhakja(t_philo *cherhakjas)
+{
+	usleep(1000);
+	printf("????\n");
+	printf("%zu\n", relative_time(&cherhakjas[0].info->start_time));
+	printf("????\n");
+	pthread_mutex_destroy(cherhakjas[0].lfork);
+	pthread_mutex_destroy(cherhakjas[0].rfork);
+}
+
 int	main(int ac, char **av)
 {
 	t_info		info;
 	t_philo		*cherhakjas;
-	pthread_t	*table;
+	pthread_t	*phillo_in_table;
 
 	if (ac < 5 || ac > 6)
 		return (-1);
 	if (!validate_info(ac, av, &info))
 		return (-1);
-	cherhakjas = set_cherhakja(&info);
+	cherhakjas = set_cherhakjas(&info);
 	if (!cherhakjas)
 		return (-1);
-	table = (pthread_t *)malloc(sizeof(pthread_t) * info.num);
-	if (!table)
-	{
-		ft_free(&info);
-		return (-1);
-	}
+	if (info.num == 1)
+		only_one_cherhakja(cherhakjas);
+	// phillo_in_table = sit_down_cherhak_man(cherhakjas, &info);
+	// // table에 앉아!
+	// if (!phillo_in_table)
+	// 	return (-1);
 	return (0);
 }
 
