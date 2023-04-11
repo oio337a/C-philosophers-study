@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: suhwpark <suhwpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/10 18:51:55 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/11 20:21:06 by suhwpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,33 @@ t_philo	*set_cherhakjas(t_info *info)
 // 	return (table);
 // }
 
+//제가 생각한 필로소퍼 구조입니다 
+
+void	suhwpark(t_info *info, t_philo *philos, pthread_t *table)
+{
+	int	i;
+
+	i = -1;
+	info->time = get_times(); // 이거는 만들어봐여
+	while (++i < info->num)
+	{
+		pthread_mutex_lock(&(info->philo_mutex));
+		philos[i].last_eating = info->start_time;
+		pthread_mutex_unlock(&(info->philo_mutex));
+		if (!(i % 2))
+			pthread_create(&table[i], 0, cherhakjas_routine, &philos[i]);
+	}
+	// 여기서 usleep을 해야할듯
+	usleep();
+	i = -1;
+	while (++i < info->num)
+	{
+		if (i % 2)
+			pthread_create(&table[i], 0, cherhakjas_routine, &philos[i]);
+	}
+	//이제여기서 철학자들 모니터링 하면 될듯!
+}
+
 void	only_one_cherhakja(t_philo *cherhakjas)
 {
 	usleep(1000);
@@ -112,6 +139,13 @@ int	main(int ac, char **av)
 		return (-1);
 	if (info.num == 1)
 		only_one_cherhakja(cherhakjas);
+	
+	//suhwpark 방식
+	phillo_in_table = (pthread_t *)malloc(pthread_t * sizeof(info.num));
+	
+	//suhwpark 방식 끝
+	
+	
 	// phillo_in_table = sit_down_cherhak_man(cherhakjas, &info);
 	// // table에 앉아!
 	// if (!phillo_in_table)
