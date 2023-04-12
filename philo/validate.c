@@ -6,11 +6,11 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:21:30 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/12 18:40:30 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/12 20:41:17 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "philo.h"
 
 static int	ft_atoi(char *str)
 {
@@ -35,10 +35,7 @@ static int	ft_atoi(char *str)
 
 int	validate_info(int ac, char **av, t_info *info)
 {
-	struct timeval	time_start;
-
-	gettimeofday(&time_start, NULL);
-	info->start_time = time_start.tv_usec;
+	info->start_time = relative_time();
 	info->num = ft_atoi(av[1]);
 	info->t_die = ft_atoi(av[2]);
 	info->t_eat = ft_atoi(av[3]);

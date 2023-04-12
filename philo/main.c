@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/12 18:14:49 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/12 20:53:30 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_philo	*set_cherhakjas(t_info *info)
 	cherhakjas = make_cherhakja(info, info->forks);
 	if (!cherhakjas)
 	{
-		ft_free(info->forks);
 		ft_free(info);
 		return (NULL);
 	}
@@ -112,13 +111,18 @@ t_philo	*set_cherhakjas(t_info *info)
 // 			pthread_create(&table[i], 0, cherhakjas_routine, &philos[i]);
 // 	}
 // 	//이제여기서 철학자들 모니터링 하면 될듯!
-// }åå
+// }
 
-void	only_one_cherhakja(t_philo *cherhakjas)
+void	only_one_cherhakja(t_philo *cherhakjas, t_info *info)
 {
-	printf("????\n");
-	printf("time : %zd\n", relative_time(&cherhakjas[0].info->start_time) / (1000 * 1000)); //0이요 
-	printf("????\n");
+	int	i;
+
+	i = -1;
+	usleep(800);
+	print_msg(relative_time() - info->start_time, cherhakjas, "has taken a fork");
+	while (++i * 100 < info->t_die)
+		usleep(1000);
+	print_msg(relative_time() - info->start_time, cherhakjas, "died");
 	pthread_mutex_destroy(cherhakjas[0].lfork);
 	pthread_mutex_destroy(cherhakjas[0].rfork);
 }
@@ -137,7 +141,12 @@ int	main(int ac, char **av)
 	if (!cherhakjas)
 		return (-1);
 	if (info.num == 1)
-		only_one_cherhakja(cherhakjas);
+	{
+		only_one_cherhakja(cherhakjas, &info);
+		pthread_mutex_destroy(&info.philo_mutex);
+		pthread_mutex_destroy(&info.info_mutex);
+		return (-1);
+	}
 	phillo_in_table = (pthread_t *)malloc(sizeof(pthread_t) * info.num);
 	if (!phillo_in_table)
 		return (-1);

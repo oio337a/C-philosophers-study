@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   about_time.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:14:09 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/12 18:41:18 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/12 20:52:26 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../philo.h"
+#include "philo.h"
 
-size_t	relative_time(size_t time_start)
+MS	relative_time(void)
 {
 	struct timeval	current;
 
-	// gettimeofday(&current, NULL);
-	// printf("1. %d\n", current.tv_usec);
-	// // usleep(1000);
 	gettimeofday(&current, 0);
-	printf("1. %zd\n", current.tv_usec);
-	printf("2. %zd\n", time_start);
-	
-	return (current.tv_sec * 1000 * 1000 + current.tv_usec - time_start);
-	// return ((current.tv_sec - time_start) / (1000 * 1000));
-	// return ((current.tv_usec - time_start) / (1000 * 1000));
-	// return ((time_start - current.tv_usec) / (1000 * 1000));
-
+	return (current.tv_sec * 1000 + current.tv_usec / 1000);
 }
-// 이거 블로그에서 본건데여 time_start - 현재 시간을 뺀거에여 얼마나 걸렸나 반환.
+
+void	*ft_free(t_info *info)
+{
+	pthread_mutex_destroy(&info->info_mutex);
+	pthread_mutex_destroy(&info->philo_mutex);
+	return (NULL);
+}
+
+// timestamp_in_ms X has taken a fork
+// timestamp_in_ms X is eating
+// timestamp_in_ms X is sleeping
+// timestamp_in_ms X is thinking
+// timestamp_in_ms X died
+void	print_msg(MS seconds, t_philo *philo, char *msg)
+{
+	printf("%llu	%d	%s\n", seconds, philo->p_index, msg);
+}
