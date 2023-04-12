@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:21:30 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/10 18:46:04 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/12 18:40:30 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,19 @@ int	validate_info(int ac, char **av, t_info *info)
 {
 	struct timeval	time_start;
 
-	info->start_time = gettimeofday(&time_start, NULL);
+	gettimeofday(&time_start, NULL);
+	info->start_time = time_start.tv_usec;
 	info->num = ft_atoi(av[1]);
 	info->t_die = ft_atoi(av[2]);
 	info->t_eat = ft_atoi(av[3]);
 	info->t_sleep = ft_atoi(av[4]);
+	info->must_eat = 0;
 	if (ac == 6)
 	{
 		info->must_eat = ft_atoi(av[5]);
-		if (!info->must_eat)
+		if (info->must_eat <= 0)
 			return (0);
 	}
-	else
-		info->must_eat = 0;
 	if (info->num <= 0 || info->t_die > MAX_INT || info->t_eat > MAX_INT
 		|| info->t_sleep > MAX_INT || info->must_eat < 0)
 		return (0);

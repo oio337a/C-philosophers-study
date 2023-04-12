@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/10 18:24:30 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/12 18:40:18 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 typedef struct s_info
 {
-	MS				start_time;
+	size_t			start_time;
 	int				num;
 	MS				t_die;
 	MS				t_eat;
