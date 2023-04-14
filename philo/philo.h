@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/12 20:51:29 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/14 17:51:32 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@
 
 # define MAX_INT 2147483647
 # define MIN_INT -2147483648
+
+# define PICK		"has taken a fork"
+# define EATING		"is eating"
+# define SLEEPING	"is sleeping"
+# define THINKING	"is thinking"
+# define DIED		"died"
 
 typedef struct s_info
 {

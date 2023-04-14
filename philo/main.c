@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/12 20:53:30 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/14 17:52:08 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,17 @@ t_philo	*set_cherhakjas(t_info *info)
 
 void	only_one_cherhakja(t_philo *cherhakjas, t_info *info)
 {
-	int	i;
+	MS	i;
 
-	i = -1;
+	i = 0;
 	usleep(800);
-	print_msg(relative_time() - info->start_time, cherhakjas, "has taken a fork");
-	while (++i * 100 < info->t_die)
+	print_msg(relative_time() - info->start_time, cherhakjas, PICK);
+	while (i * 100 < info->t_die)
+	{
 		usleep(1000);
-	print_msg(relative_time() - info->start_time, cherhakjas, "died");
+		i++;
+	}
+	print_msg(relative_time() - info->start_time, cherhakjas, DIED);
 	pthread_mutex_destroy(cherhakjas[0].lfork);
 	pthread_mutex_destroy(cherhakjas[0].rfork);
 }
@@ -143,8 +146,9 @@ int	main(int ac, char **av)
 	if (info.num == 1)
 	{
 		only_one_cherhakja(cherhakjas, &info);
-		pthread_mutex_destroy(&info.philo_mutex);
-		pthread_mutex_destroy(&info.info_mutex);
+		ft_free(&info);
+		// pthread_mutex_destroy(&info.philo_mutex);
+		// pthread_mutex_destroy(&info.info_mutex);
 		return (-1);
 	}
 	phillo_in_table = (pthread_t *)malloc(sizeof(pthread_t) * info.num);
