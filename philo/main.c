@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/14 19:33:53 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/14 22:18:56 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_philo	*make_cherhakja(t_info *info, pthread_mutex_t *forks)
 t_philo	*set_cherhakjas(t_info *info)
 {
 	t_philo	*cherhakjas;
+
 	info->forks = make_forks(info);
 	if (!info->forks)
 	{
@@ -65,26 +66,6 @@ t_philo	*set_cherhakjas(t_info *info)
 	return (cherhakjas);
 }
 
-// pthread_t	*sit_down_cherhak_man(t_philo *cherhakjas, t_info *info)
-// {
-// 	pthread_t	*table;
-// 	int			i;
-
-// 	table = (pthread_t *)malloc(sizeof(pthread_t) * info->num);
-// 	if (!table)
-// 	{
-// 		ft_free(&info);
-// 		return (NULL);
-// 	}
-// 	i = -1;
-// 	while (++i < info->num)
-// 	{
-// 		table[i] = pthread_create(&table[i], NULL, cherhakjas_routine, &cherhakjas[i]);
-// 	}
-	
-// 	return (table);
-// }
-
 //제가 생각한 필로소퍼 구조입니다 
 
 void	suhwpark(t_info *info, t_philo *philos, pthread_t *table)
@@ -98,31 +79,23 @@ void	suhwpark(t_info *info, t_philo *philos, pthread_t *table)
 		philos[i].last_eating = info->start_time;
 		pthread_mutex_unlock(&(info->philo_mutex));
 		if (!(i % 2))
-			pthread_create(&table[i], 0, cherhakjas_routine, &philos[i]);
+			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
 	}
-	// 여기서 usleep을 해야할듯 // 근데 usleep이 왜 필요할까여?? 왜 why??
 	usleep(1000);
 	i = -1;
 	while (++i < info->num)
 	{
 		if (i % 2)
-			pthread_create(&table[i], 0, cherhakjas_routine, &philos[i]);
+			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
 	}
 	//이제여기서 철학자들 모니터링 하면 될듯!
 }
 
 static int	only_one_cherhakja(t_philo *cherhakjas, t_info *info)
 {
-	MS	i;
-
-	i = 0;
-	usleep(800);
+	usleep(1000);
 	print_msg(relative_time() - info->start_time, cherhakjas, PICK);
-	while (i * 100 < info->t_die)
-	{
-		usleep(1000);
-		i++;
-	}
+	usleep(1000 * info->t_die);
 	print_msg(relative_time() - info->start_time, cherhakjas, DIED);
 	ft_free(info, cherhakjas);
 	return (0);
@@ -147,5 +120,6 @@ int	main(int ac, char **av)
 	if (!phillo_in_table)
 		return (-1);
 	suhwpark(&info, cherhakjas, phillo_in_table);
+	pthread_join(*phillo_in_table, NULL);
 	return (0);
 }

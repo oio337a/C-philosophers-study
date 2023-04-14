@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/14 19:31:58 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/14 21:45:01 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct s_philo
 MS		relative_time(void);
 int		validate_info(int ac, char **av, t_info *info);
 void	*ft_free(t_info *info, t_philo *cherhakjas);
-void	*cherhakjas_routine(void *cherhakjas);
+void	*cherhakjas_routine(t_philo *cherhakjas);
 void	print_msg(MS seconds, t_philo *philo, char *msg);
 
 #endif
