@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:01 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/10 18:14:36 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/14 19:36:06 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@
 
 void	*cherhakjas_routine(void *cherhakjas)
 {
-	/*
-		timestamp_in_ms X has taken a fork
-		timestamp_in_ms X is eating
-		timestamp_in_ms X is sleeping
-		timestamp_in_ms X is thinking
-		timestamp_in_ms X died
-	*/
-	// 생성 됬으니 뮤택스 끌까여? 1명 생성되면? 왜냐면 출력을 한명씩 해명씩 해야하는거 잖아여.
+	// 포크가 있으면 집는다.
+	if (!pthread_mutex_lock(cherhakjas)) // 성공
+	{
+
+	}
+	while (!pthread_mutex_lock)
+		;
+	
+	// 먹는다.
+	// 포크를 내려 놓는다. 
+	// 생각 한다. 
 }
 
 void	eating(t_philo *philo)

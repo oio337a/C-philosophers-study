@@ -6,35 +6,39 @@
 #    By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/03 15:23:57 by yongmipa          #+#    #+#              #
-#    Updated: 2023/04/14 17:54:31 by yongmipa         ###   ########seoul.kr   #
+#    Updated: 2023/04/14 18:32:57 by yongmipa         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
 .DEFAULT_GOAL := all
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -MMD -MP -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread
 
 SRCS = 	main.c utils.c validate.c
 
 NAME = philo
 
 OBJS = $(SRCS:.c=.o)
-DEPS = $(SRCS:.c=.d)
--include $(DEPS)
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
+	$(CC) $^ -o $@
+
+RM = rm -rf
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 clean :
-	$(RM) $(OBJS) $(DEPS)
+	$(RM) $(OBJS)
 
 fclean : clean
 	$(RM) $(NAME)
 	
 re : 
-	$(MAKE) fclean
-	$(MAKE) all
+	make fclean
+	make all
 
 .PHONY: all clean fclean re
