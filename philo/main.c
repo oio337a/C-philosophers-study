@@ -6,26 +6,30 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/17 18:39:59 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/17 22:07:21 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	monitor(t_philo *cherhakjas, pthread_t *table)
+void	monitor(t_philo *cherhakjas)
 {
 	int	i;
 
 	i = 0;
-	while (i++ < cherhakjas->info->num)
+	if (pthread_mutex_lock(&(cherhakjas->info)->info_mutex))
 	{
-		if (relative_time() - cherhakjas[i].last_eating > cherhakjas[i].info->t_die)
+
+		while (i++ < cherhakjas->info->num)
 		{
-			pthread_mutex_lock(&(cherhakjas->info)->info_mutex);
-			print_msg(relative_time() - cherhakjas->info->start_time, cherhakjas, DIED);
-			return (NULL);
+			if (relative_time() - cherhakjas[i].last_eating > cherhakjas[i].info->t_die)
+			{
+				print_msg(relative_time() - cherhakjas->info->start_time, cherhakjas, DIED);
+				return ;
+			}
 		}
 	}
+	// 다 살아있음
 	/*
 		조인
 		루틴 각각이 도는건데 불가.
@@ -100,31 +104,24 @@ void	suhwpark(t_info *info, t_philo *philos, pthread_t *table) // 5 800 200
 		philos[i].last_eating = info->start_time;
 		pthread_mutex_unlock(&(info->philo_mutex));
 		if (!(i % 2))
-		{
 			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
-			// pthread_join(table[i], NULL);
-		}
 	}
-	usleep(1000);
+	usleep(100);
 	i = -1;
 	while (++i < info->num)
 	{
 		if (i % 2)
-		{
 			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
-			// pthread_join(table[i], NULL);
-		}
 	}
 	//이제여기서 철학자들 모니터링 하면 될듯!
-	monitor(*philos, table);
+	monitor(philos);
 }
 
 static int	only_one_cherhakja(t_philo *cherhakjas, t_info *info)
 {
-	usleep(1000);
-	print_msg(relative_time() - info->start_time, cherhakjas, PICK);
+	print_msg(info->start_time, cherhakjas, PICK);
 	usleep(1000 * info->t_die);
-	print_msg(relative_time() - info->start_time, cherhakjas, DIED);
+	print_msg(info->start_time, cherhakjas, DIED);
 	ft_free(info, cherhakjas);
 	return (0);
 }
@@ -148,6 +145,6 @@ int	main(int ac, char **av)
 	if (!phillo_in_table)
 		return (-1);
 	suhwpark(&info, cherhakjas, phillo_in_table);
-	// pthread_join(*phillo_in_table, NULL);
+	pthread_join(*phillo_in_table, NULL);
 	return (0);
 }

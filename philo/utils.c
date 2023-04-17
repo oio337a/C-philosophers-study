@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:14:09 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/14 18:26:06 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/17 21:54:20 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,16 @@ void	*ft_free(t_info *info, t_philo *cherhakjas)
 
 void	print_msg(MS seconds, t_philo *philo, char *msg)
 {
-	printf("%llu	%d	%s\n", seconds, philo->p_index, msg);
+	MS	time;
+
+	time = relative_time() - seconds;
+	pthread_mutex_lock(&(philo->info)->philo_mutex);
+	printf("%llu	%d	%s\n", time, philo->p_index, msg);
+	pthread_mutex_unlock(&(philo->info)->philo_mutex);
+	printf("\033[0m");
+}
+
+void	ft_usleep(MS time)
+{
+	usleep(1000 * time);
 }

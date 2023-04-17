@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/17 15:13:21 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/17 21:48:00 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@
 # define MAX_INT	2147483647
 # define MIN_INT	-2147483648
 
-# define PICK		"has taken a fork"
-# define EATING		"is eating"
-# define SLEEPING	"is sleeping"
-# define THINKING	"is thinking"
-# define DIED		"died"
+# define PICK		"\033[38:5:225m	🥄 has taken a fork"
+# define EATING		"\033[38:5:51m	🍝 is eating"
+# define SLEEPING	"\033[38:5:208m	🌜 is sleeping"
+# define THINKING	"\033[38:5:252m	🧐 is thinking"
+# define DIED		"\033[38:5:196m	🧟‍♂️ died"
 
 typedef struct s_info
 {
@@ -45,8 +45,9 @@ typedef struct s_info
 	int				must_eat;
 	MS				start_time;
 	pthread_mutex_t	info_mutex; // 철학자 죽었을 때 0으로 만들어서 출력 불가
-	pthread_mutex_t	philo_mutex;  // 철학자들 감시 
+	pthread_mutex_t	philo_mutex;  // 철학자들 감시
 	pthread_mutex_t	*forks; // 포크들
+	pthread_mutex_t	philo_print;
 }	t_info;
 
 typedef struct s_philo
@@ -65,5 +66,6 @@ int		validate_info(int ac, char **av, t_info *info);
 void	*ft_free(t_info *info, t_philo *cherhakjas);
 void	*cherhakjas_routine(t_philo *cherhakjas);
 void	print_msg(MS seconds, t_philo *philo, char *msg);
+void	ft_usleep(MS time);
 
 #endif
