@@ -6,11 +6,32 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/14 22:18:56 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/17 18:39:59 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	monitor(t_philo *cherhakjas, pthread_t *table)
+{
+	int	i;
+
+	i = 0;
+	while (i++ < cherhakjas->info->num)
+	{
+		if (relative_time() - cherhakjas[i].last_eating > cherhakjas[i].info->t_die)
+		{
+			pthread_mutex_lock(&(cherhakjas->info)->info_mutex);
+			print_msg(relative_time() - cherhakjas->info->start_time, cherhakjas, DIED);
+			return (NULL);
+		}
+	}
+	/*
+		조인
+		루틴 각각이 도는건데 불가.
+	*/
+	
+}
 
 pthread_mutex_t	*make_forks(t_info *info)
 {
@@ -68,7 +89,7 @@ t_philo	*set_cherhakjas(t_info *info)
 
 //제가 생각한 필로소퍼 구조입니다 
 
-void	suhwpark(t_info *info, t_philo *philos, pthread_t *table)
+void	suhwpark(t_info *info, t_philo *philos, pthread_t *table) // 5 800 200 
 {
 	int	i;
 
@@ -79,16 +100,23 @@ void	suhwpark(t_info *info, t_philo *philos, pthread_t *table)
 		philos[i].last_eating = info->start_time;
 		pthread_mutex_unlock(&(info->philo_mutex));
 		if (!(i % 2))
+		{
 			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
+			// pthread_join(table[i], NULL);
+		}
 	}
 	usleep(1000);
 	i = -1;
 	while (++i < info->num)
 	{
 		if (i % 2)
+		{
 			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
+			// pthread_join(table[i], NULL);
+		}
 	}
 	//이제여기서 철학자들 모니터링 하면 될듯!
+	monitor(*philos, table);
 }
 
 static int	only_one_cherhakja(t_philo *cherhakjas, t_info *info)
@@ -120,6 +148,6 @@ int	main(int ac, char **av)
 	if (!phillo_in_table)
 		return (-1);
 	suhwpark(&info, cherhakjas, phillo_in_table);
-	pthread_join(*phillo_in_table, NULL);
+	// pthread_join(*phillo_in_table, NULL);
 	return (0);
 }

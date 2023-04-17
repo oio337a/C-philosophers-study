@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/14 21:45:01 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/17 15:13:21 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_philo
 	t_info			*info;
 }	t_philo;
 
-//utils
 // size_t	relative_time(size_t time_start);
 MS		relative_time(void);
 int		validate_info(int ac, char **av, t_info *info);
