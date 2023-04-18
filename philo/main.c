@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/18 16:57:17 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/18 18:23:31 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	monitor(t_philo *cherhakjas)
+void	monitor(t_philo *philo)
 {
 	int	i;
 
 	i = 0;
 	while (1)
 	{
-		pthread_mutex_lock(&(cherhakjas->info)->philo_mutex);
-		if (!(&(cherhakjas->info)->end_flag))
+		pthread_mutex_lock(&(philo->info)->philo_mutex);
+		if (!(&(philo->info)->end_flag))
 		{
-			pthread_mutex_unlock(&(cherhakjas->info)->philo_mutex);
+			pthread_mutex_unlock(&(philo->info)->philo_mutex);
 			return ;
 		}
-		pthread_mutex_unlock(&(cherhakjas->info)->philo_mutex);
+		pthread_mutex_unlock(&(philo->info)->philo_mutex);
 	}
 	return ;
 }
@@ -67,7 +67,7 @@ t_philo	*make_cherhakja(t_info *info, pthread_mutex_t *forks)
 
 t_philo	*set_cherhakjas(t_info *info)
 {
-	t_philo	*cherhakjas;
+	t_philo	*philo;
 
 	info->forks = make_forks(info);
 	if (!info->forks)
@@ -75,13 +75,13 @@ t_philo	*set_cherhakjas(t_info *info)
 		ft_free(info, NULL);
 		return (NULL);
 	}
-	cherhakjas = make_cherhakja(info, info->forks);
-	if (!cherhakjas)
+	philo = make_cherhakja(info, info->forks);
+	if (!philo)
 	{
 		ft_free(info, NULL);
 		return (NULL);
 	}
-	return (cherhakjas);
+	return (philo);
 }
 
 //제가 생각한 필로소퍼 구조입니다 
@@ -97,47 +97,47 @@ void	suhwpark(t_info *info, t_philo *philos, pthread_t *table) // 5 800 200
 		philos[i].last_eating = info->start_time;
 		pthread_mutex_unlock(&(info->philo_mutex));
 		if (!(i % 2))
-			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
+			pthread_create(&table[i], 0, (void *)routines, &philos[i]);
 	}
 	usleep(1000);
 	i = -1;
 	while (++i < info->num)
 	{
 		if (i % 2)
-			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
+			pthread_create(&table[i], 0, (void *)routines, &philos[i]);
 	}
 	//이제여기서 철학자들 모니터링 하면 될듯!
 	monitor(philos);
 }
 
-static int	only_one_cherhakja(t_philo *cherhakjas, t_info *info)
+static int	only_one_cherhakja(t_philo *philo, t_info *info)
 {
-	print_msg(info->start_time, cherhakjas, PICK);
+	print_msg(info->start_time, philo, PICK);
 	usleep(1000 * info->t_die);
-	print_msg(info->start_time, cherhakjas, DIED);
-	ft_free(info, cherhakjas);
+	print_msg(info->start_time, philo, DIED);
+	ft_free(info, philo);
 	return (0);
 }
 
 int	main(int ac, char **av)
 {
 	t_info		info;
-	t_philo		*cherhakjas;
+	t_philo		*philo;
 	pthread_t	*phillo_in_table;
 
 	if (ac < 5 || ac > 6)
 		return (-1);
 	if (!validate_info(ac, av, &info))
 		return (-1);
-	cherhakjas = set_cherhakjas(&info);
-	if (!cherhakjas)
+	philo = set_cherhakjas(&info);
+	if (!philo)
 		return (-1);
 	if (info.num == 1)
-		return (only_one_cherhakja(cherhakjas, &info));
+		return (only_one_cherhakja(philo, &info));
 	phillo_in_table = (pthread_t *)malloc(sizeof(pthread_t) * info.num);
 	if (!phillo_in_table)
 		return (-1);
-	suhwpark(&info, cherhakjas, phillo_in_table);
+	suhwpark(&info, philo, phillo_in_table);
 	pthread_join(*phillo_in_table, NULL);
 	return (0);
 }

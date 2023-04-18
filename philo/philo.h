@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/18 16:52:44 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/18 18:24:09 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_philo
 MS		relative_time(void);
 int		validate_info(int ac, char **av, t_info *info);
 void	*ft_free(t_info *info, t_philo *cherhakjas);
-void	*cherhakjas_routine(t_philo *cherhakjas);
+void	*routines(t_philo *cherhakjas);
 void	print_msg(MS seconds, t_philo *philo, char *msg);
 void	ft_usleep(MS time);
 
