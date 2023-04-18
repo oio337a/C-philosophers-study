@@ -6,7 +6,7 @@
 #    By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/03 15:23:57 by yongmipa          #+#    #+#              #
-#    Updated: 2023/04/17 20:37:33 by yongmipa         ###   ########seoul.kr   #
+#    Updated: 2023/04/18 21:57:54 by yongmipa         ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
-
 SRCS = 	main.c utils.c validate.c actions.c
 
 NAME = philo

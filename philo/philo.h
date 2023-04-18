@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/18 16:52:44 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/18 22:01:09 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,12 @@ typedef struct s_info
 	MS				t_sleep;
 	int				must_eat;
 	MS				start_time;
-	int				end_flag;
-	// pthread_mutex_t	info_mutex; // 철학자 죽었을 때 0으로 만들어서 출력 불가
+	int				end_flag;// 철학자 죽었을 때 0으로 만들어서 출력 불가
 	pthread_mutex_t	philo_mutex;  // 철학자들 감시
 	pthread_mutex_t	*forks; // 포크들
 	pthread_mutex_t	philo_print;
 }	t_info;
-// print, last_eat, fork, 
+
 typedef struct s_philo
 {
 	int				p_index;
@@ -58,15 +57,17 @@ typedef struct s_philo
 	int				amount_eat;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
-	t_info			*info;
+	t_info	*info;
 }	t_philo;
 
 // size_t	relative_time(size_t time_start);
 MS		relative_time(void);
 int		validate_info(int ac, char **av, t_info *info);
 void	*ft_free(t_info *info, t_philo *cherhakjas);
-void	*cherhakjas_routine(t_philo *cherhakjas);
+void	*routine(t_philo *cherhakjas);
 void	print_msg(MS seconds, t_philo *philo, char *msg);
-void	ft_usleep(MS time);
+void	ft_usleep(MS time, MS finish);
+MS		get_time(MS start);
+int		is_dead(t_info *info);
 
 #endif

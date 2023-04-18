@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:14:09 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/17 21:54:20 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/18 22:00:58 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*ft_free(t_info *info, t_philo *cherhakjas)
 {
 	if (!cherhakjas)
 	{
-		pthread_mutex_destroy(&info->info_mutex);
+		pthread_mutex_destroy(&info->philo_print);
 		pthread_mutex_destroy(&info->philo_mutex);
 	}
 	if (!info)
@@ -43,13 +43,27 @@ void	print_msg(MS seconds, t_philo *philo, char *msg)
 	MS	time;
 
 	time = relative_time() - seconds;
-	pthread_mutex_lock(&(philo->info)->philo_mutex);
+	pthread_mutex_lock(&(philo->info)->philo_print);
+	if (philo->info->end_flag)
+	{
+		pthread_mutex_unlock(&(philo->info)->philo_print);
+		return ;
+	}
 	printf("%llu	%d	%s\n", time, philo->p_index, msg);
-	pthread_mutex_unlock(&(philo->info)->philo_mutex);
+	pthread_mutex_unlock(&(philo->info)->philo_print);
 	printf("\033[0m");
 }
 
-void	ft_usleep(MS time)
+MS	get_time(MS start)
 {
-	usleep(1000 * time);
+	MS	now;
+
+	now = relative_time();
+	return (now - start);
+}
+
+void	ft_usleep(MS time, MS finish)
+{
+	while (get_time(time) < finish)
+		usleep(100);
 }

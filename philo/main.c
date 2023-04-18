@@ -6,28 +6,31 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/18 16:57:17 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/18 22:01:02 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	monitor(t_philo *cherhakjas)
+static void	monitor(t_philo *philo, pthread_t *table)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	while (1)
 	{
-		pthread_mutex_lock(&(cherhakjas->info)->philo_mutex);
-		if (!(&(cherhakjas->info)->end_flag))
+		pthread_mutex_lock(&(philo->info)->philo_mutex);
+		if (relative_time() - philo->last_eating >= philo->info->t_die)
 		{
-			pthread_mutex_unlock(&(cherhakjas->info)->philo_mutex);
-			return ;
+			print_msg(philo->info->start_time, philo, DIED);
+			philo->info->end_flag = 1;
+			pthread_mutex_unlock(&(philo->info)->philo_mutex);
+			break ;
 		}
-		pthread_mutex_unlock(&(cherhakjas->info)->philo_mutex);
+		pthread_mutex_unlock(&(philo->info)->philo_mutex);
 	}
-	return ;
+	while (++i < philo[0].info->num)
+		pthread_join(table[i], NULL);
 }
 
 pthread_mutex_t	*make_forks(t_info *info)
@@ -97,17 +100,17 @@ void	suhwpark(t_info *info, t_philo *philos, pthread_t *table) // 5 800 200
 		philos[i].last_eating = info->start_time;
 		pthread_mutex_unlock(&(info->philo_mutex));
 		if (!(i % 2))
-			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
+			pthread_create(&table[i], 0, (void *)routine, &philos[i]);
 	}
-	usleep(1000);
+	usleep(100);
 	i = -1;
 	while (++i < info->num)
 	{
 		if (i % 2)
-			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
+			pthread_create(&table[i], 0, (void *)routine, &philos[i]);
 	}
 	//이제여기서 철학자들 모니터링 하면 될듯!
-	monitor(philos);
+	monitor(philos, table);
 }
 
 static int	only_one_cherhakja(t_philo *cherhakjas, t_info *info)
@@ -138,6 +141,5 @@ int	main(int ac, char **av)
 	if (!phillo_in_table)
 		return (-1);
 	suhwpark(&info, cherhakjas, phillo_in_table);
-	pthread_join(*phillo_in_table, NULL);
 	return (0);
 }

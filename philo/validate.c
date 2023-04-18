@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:21:30 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/18 16:53:07 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/18 19:30:20 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	validate_info(int ac, char **av, t_info *info)
 	if (info->num <= 0 || info->t_die > MAX_INT || info->t_eat > MAX_INT
 		|| info->t_sleep > MAX_INT || info->must_eat < 0)
 		return (0);
-	pthread_mutex_init(&(info->info_mutex), NULL);
+	pthread_mutex_init(&(info->philo_print), NULL);
 	pthread_mutex_init(&(info->philo_mutex), NULL);
 	return (1);
 }

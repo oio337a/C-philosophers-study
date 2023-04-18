@@ -67,4 +67,8 @@
 > 두 함수 모두 스레드 종료 시 할당 자원 반납을 보장하며, 성공 시 0을 return
 > join은 쓰레드가 끝나기 전까지 main 쓰레드가 동작할 수 없게 만들고, detach는 동작할 수 있게 만든다 는 것이다.
 
+join
+int pthread_join(pthread_t thread, void **thread_return)
+
 // 데이터 레이싱, 죽었을 때 누가 죽었다고 출력만 하고 나머지 다 걍 나와야됨
+//gcc -fsanitize=thread *.c 데이터 레이스 위치 추적
