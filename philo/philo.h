@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/17 21:48:00 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/18 16:52:44 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,13 @@ typedef struct s_info
 	MS				t_sleep;
 	int				must_eat;
 	MS				start_time;
-	pthread_mutex_t	info_mutex; // 철학자 죽었을 때 0으로 만들어서 출력 불가
+	int				end_flag;
+	// pthread_mutex_t	info_mutex; // 철학자 죽었을 때 0으로 만들어서 출력 불가
 	pthread_mutex_t	philo_mutex;  // 철학자들 감시
 	pthread_mutex_t	*forks; // 포크들
 	pthread_mutex_t	philo_print;
 }	t_info;
-
+// print, last_eat, fork, 
 typedef struct s_philo
 {
 	int				p_index;

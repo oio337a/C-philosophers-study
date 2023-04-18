@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:21:30 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/12 20:41:17 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/18 16:53:07 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	validate_info(int ac, char **av, t_info *info)
 	info->t_eat = ft_atoi(av[3]);
 	info->t_sleep = ft_atoi(av[4]);
 	info->must_eat = 0;
+	info->end_flag = 0;
 	if (ac == 6)
 	{
 		info->must_eat = ft_atoi(av[5]);

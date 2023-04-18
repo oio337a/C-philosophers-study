@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/17 22:07:21 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/18 16:57:17 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,17 @@ void	monitor(t_philo *cherhakjas)
 	int	i;
 
 	i = 0;
-	if (pthread_mutex_lock(&(cherhakjas->info)->info_mutex))
+	while (1)
 	{
-
-		while (i++ < cherhakjas->info->num)
+		pthread_mutex_lock(&(cherhakjas->info)->philo_mutex);
+		if (!(&(cherhakjas->info)->end_flag))
 		{
-			if (relative_time() - cherhakjas[i].last_eating > cherhakjas[i].info->t_die)
-			{
-				print_msg(relative_time() - cherhakjas->info->start_time, cherhakjas, DIED);
-				return ;
-			}
+			pthread_mutex_unlock(&(cherhakjas->info)->philo_mutex);
+			return ;
 		}
+		pthread_mutex_unlock(&(cherhakjas->info)->philo_mutex);
 	}
-	// 다 살아있음
-	/*
-		조인
-		루틴 각각이 도는건데 불가.
-	*/
-	
+	return ;
 }
 
 pthread_mutex_t	*make_forks(t_info *info)
@@ -106,7 +99,7 @@ void	suhwpark(t_info *info, t_philo *philos, pthread_t *table) // 5 800 200
 		if (!(i % 2))
 			pthread_create(&table[i], 0, (void *)cherhakjas_routine, &philos[i]);
 	}
-	usleep(100);
+	usleep(1000);
 	i = -1;
 	while (++i < info->num)
 	{
