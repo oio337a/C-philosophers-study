@@ -6,23 +6,31 @@
 /*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 13:39:22 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:51:38 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-// static int	who_dead(t_philo *philo)
-// {
-// 	pthread_mutex_lock(&(philo->info)->philo_mutex);
-// 	if (relative_time() - philo->last_eating >= philo->info->t_die)
-// 	{
-// 		print_msg(philo->info->start_time, philo, DIED); // time 수정
-// 		philo->info->end_flag = 1;
-// 		pthread_mutex_unlock(&(philo->info)->philo_mutex);
-// 		break ;
-// 	}
-// 	pthread_mutex_unlock(&(philo->info)->philo_mutex);
-// }
+
+static int	in_monitor(t_philo *philo)
+{
+	int	i;
+
+	i = -1;
+	while (++i < philo->info->num)
+	{
+		pthread_mutex_lock(&(philo->info)->philo_mutex);
+		if (relative_time() - (&philo[i])[0].last_eating >= philo->info->t_die)
+		{
+			print_msg(philo->info->start_time, &philo[i], DIED);
+			philo->info->end_flag = 1;
+			pthread_mutex_unlock(&(philo->info)->philo_mutex);
+			return (1);
+		}
+		pthread_mutex_unlock(&(philo->info)->philo_mutex);
+	}
+	return (0);
+}
 
 static void	monitor(t_philo *philo, pthread_t *table)
 {
@@ -30,13 +38,27 @@ static void	monitor(t_philo *philo, pthread_t *table)
 
 	i = -1;
 	while (1)
+		if (in_monitor(philo))
+			break ;
+	while (++i < philo[0].info->num)
+	{
+		if (philo->info->end_flag == 1)
+		{
+			pthread_detach(table[i]);
+			i++;
+		}
+		pthread_join(table[i], NULL);
+	}
+}
+
+/*
+
+
+		while (1)
 	{
 		pthread_mutex_lock(&(philo->info)->philo_mutex);
 		if (relative_time() - philo->last_eating >= philo->info->t_die)
 		{
-			/* 마지막 죽은 시점을 반환하도록 
-				보통 포크를 하나만 쥐었거나 걍 기다리다 죽을건데.. 흠....
-			*/
 			print_msg(philo->info->start_time, philo, DIED);
 			philo->info->end_flag = 1;
 			pthread_mutex_unlock(&(philo->info)->philo_mutex);
@@ -44,9 +66,7 @@ static void	monitor(t_philo *philo, pthread_t *table)
 		}
 		pthread_mutex_unlock(&(philo->info)->philo_mutex);
 	}
-	while (++i < philo[0].info->num)
-		pthread_join(table[i], NULL);
-}
+*/
 
 pthread_mutex_t	*make_forks(t_info *info)
 {

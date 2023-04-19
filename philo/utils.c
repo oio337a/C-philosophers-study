@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:14:09 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/18 22:00:58 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/19 16:16:24 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ void	print_msg(MS seconds, t_philo *philo, char *msg)
 {
 	MS	time;
 
-	time = relative_time() - seconds;
 	pthread_mutex_lock(&(philo->info)->philo_print);
+	time = relative_time() - seconds;
 	if (philo->info->end_flag)
 	{
 		pthread_mutex_unlock(&(philo->info)->philo_print);
 		return ;
 	}
 	printf("%llu	%d	%s\n", time, philo->p_index, msg);
-	pthread_mutex_unlock(&(philo->info)->philo_print);
 	printf("\033[0m");
+	pthread_mutex_unlock(&(philo->info)->philo_print);
 }
 
 MS	get_time(MS start)
