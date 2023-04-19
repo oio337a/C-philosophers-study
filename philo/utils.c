@@ -6,7 +6,7 @@
 /*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:14:09 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 16:16:24 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/19 17:01:14 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	print_msg(MS seconds, t_philo *philo, char *msg)
 		pthread_mutex_unlock(&(philo->info)->philo_print);
 		return ;
 	}
-	printf("%llu	%d	%s\n", time, philo->p_index, msg);
-	printf("\033[0m");
+	printf("%llu %d %s\n", time, philo->p_index, msg);
+	// printf("\033[0m");
 	pthread_mutex_unlock(&(philo->info)->philo_print);
 }
 
