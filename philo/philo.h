@@ -6,7 +6,7 @@
 /*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 18:03:13 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/19 21:10:02 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 // # define EATING		"\033[38:5:51m	🍝 is eating"
 // # define SLEEPING	"\033[38:5:208m	🌜 is sleeping"
 // # define THINKING	"\033[38:5:252m	🧐 is thinking"
-// # define DIED		"\033[38:5:196m	🧟‍♂️ died"
+// # define DIED		"\033[38:5:196m	🧟 died"
 
 # define PICK		"has taken a fork"
 # define EATING		"is eating"

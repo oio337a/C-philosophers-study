@@ -6,7 +6,7 @@
 /*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:14:09 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 17:55:20 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/19 21:10:04 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	print_msg(MS seconds, t_philo *philo, char *msg)
 
 	pthread_mutex_lock(&(philo->info)->philo_print);
 	time = relative_time() - seconds;
+	usleep(50);
 	if (philo->info->end_flag)
 	{
 		pthread_mutex_unlock(&(philo->info)->philo_print);
