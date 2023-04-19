@@ -11,6 +11,18 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+// static int	who_dead(t_philo *philo)
+// {
+// 	pthread_mutex_lock(&(philo->info)->philo_mutex);
+// 	if (relative_time() - philo->last_eating >= philo->info->t_die)
+// 	{
+// 		print_msg(philo->info->start_time, philo, DIED); // time 수정
+// 		philo->info->end_flag = 1;
+// 		pthread_mutex_unlock(&(philo->info)->philo_mutex);
+// 		break ;
+// 	}
+// 	pthread_mutex_unlock(&(philo->info)->philo_mutex);
+// }
 
 static void	monitor(t_philo *philo, pthread_t *table)
 {
@@ -22,7 +34,8 @@ static void	monitor(t_philo *philo, pthread_t *table)
 		pthread_mutex_lock(&(philo->info)->philo_mutex);
 		if (relative_time() - philo->last_eating >= philo->info->t_die)
 		{
-			print_msg(philo->info->start_time, philo, DIED);
+			// print_msg(philo->info->start_time, philo, DIED); // time 수정
+			printf("%llu	%s\n", philo->info->t_die, "died");
 			philo->info->end_flag = 1;
 			pthread_mutex_unlock(&(philo->info)->philo_mutex);
 			break ;
