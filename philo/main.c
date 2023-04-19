@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/18 22:01:02 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/19 13:39:22 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ static void	monitor(t_philo *philo, pthread_t *table)
 		pthread_mutex_lock(&(philo->info)->philo_mutex);
 		if (relative_time() - philo->last_eating >= philo->info->t_die)
 		{
-			// print_msg(philo->info->start_time, philo, DIED); // time 수정
-			printf("%llu	%s\n", philo->info->t_die, "died");
+			/* 마지막 죽은 시점을 반환하도록 
+				보통 포크를 하나만 쥐었거나 걍 기다리다 죽을건데.. 흠....
+			*/
+			print_msg(philo->info->start_time, philo, DIED);
 			philo->info->end_flag = 1;
 			pthread_mutex_unlock(&(philo->info)->philo_mutex);
 			break ;
