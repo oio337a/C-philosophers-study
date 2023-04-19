@@ -6,7 +6,7 @@
 /*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:01 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 16:31:07 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/19 18:03:40 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@ static void	eating(t_philo *philo)
 	print_msg(philo->info->start_time, philo, EATING);
 	pthread_mutex_lock(&(philo->info)->philo_mutex);
 	philo->last_eating = relative_time();
+	philo->amount_eat += 1;
+	if (philo->info->must_eat == philo->amount_eat)
+	{
+		philo->info->end_flag = 2;
+		pthread_mutex_unlock(&(philo->info)->philo_mutex);
+		return ;
+	}
 	pthread_mutex_unlock(&(philo->info)->philo_mutex);
 	ft_usleep(relative_time(), philo->info->t_eat);
 }
@@ -45,7 +52,7 @@ static void	sleeping(t_philo *philo)
 int	is_dead(t_info *info)
 {
 	pthread_mutex_lock(&(info->philo_print));
-	if (info->end_flag == 1)
+	if (info->end_flag)
 	{
 		pthread_mutex_unlock(&(info->philo_print));
 		return (1);

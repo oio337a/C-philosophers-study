@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/03 15:23:57 by yongmipa          #+#    #+#              #
-#    Updated: 2023/04/18 21:57:54 by yongmipa         ###   ########seoul.kr   #
+#    Updated: 2023/04/19 17:57:03 by sohyupar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
-SRCS = 	main.c utils.c validate.c actions.c
+SRCS = 	main.c utils.c validate.c actions.c philos.c
 
 NAME = philo
 

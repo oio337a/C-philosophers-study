@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:21:30 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/18 19:30:20 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/19 18:03:04 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ int	validate_info(int ac, char **av, t_info *info)
 		return (0);
 	pthread_mutex_init(&(info->philo_print), NULL);
 	pthread_mutex_init(&(info->philo_mutex), NULL);
+
 	return (1);
 }

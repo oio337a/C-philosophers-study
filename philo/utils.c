@@ -6,7 +6,7 @@
 /*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:14:09 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 17:01:14 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/19 17:55:20 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ MS	relative_time(void)
 	return (current.tv_sec * 1000 + current.tv_usec / 1000);
 }
 
-void	*ft_free(t_info *info, t_philo *cherhakjas)
+void	*ft_free(t_info *info, t_philo *philo)
 {
-	if (!cherhakjas)
+	if (!philo)
 	{
 		pthread_mutex_destroy(&info->philo_print);
 		pthread_mutex_destroy(&info->philo_mutex);
@@ -31,11 +31,21 @@ void	*ft_free(t_info *info, t_philo *cherhakjas)
 	{
 		while (info->num--)
 		{
-			pthread_mutex_destroy(cherhakjas[info->num].lfork);
-			pthread_mutex_destroy(cherhakjas[info->num].rfork);
+			pthread_mutex_destroy(philo[info->num].lfork);
+			pthread_mutex_destroy(philo[info->num].rfork);
 		}
 	}
 	return (NULL);
+}
+
+void	free_philo(t_philo *philo)
+{
+	int	i;
+
+	i = -1;
+	while (++i < philo[0].info->num)
+		free(&philo[i]);
+	free(philo);
 }
 
 void	print_msg(MS seconds, t_philo *philo, char *msg)
