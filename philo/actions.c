@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:01 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 21:16:35 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/19 22:14:49 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-/*
-	여기서 걍 같이 print 해주는거 어때여
-	thinking - 특별한 거 없이 과제에서 요구한 거에 맞춰서 출력 - 밥먹거나 자는 시간 빼고 얘로 넘어감
-	pickup porks - 양쪽에 있는 공유자원인 포크를 드는 행위
-	eating - 밥을 먹었으니 죽을 시간을 갱신, 먹은 횟수 체크, 포크를 내려놓는 행위
-	sleep - 잠
-*/
 
 static void	eating(t_philo *philo)
 {
@@ -37,7 +29,7 @@ static void	eating(t_philo *philo)
 	}
 	philo->last_eating = relative_time();
 	pthread_mutex_unlock(&(philo->info)->philo_mutex);
-	ft_usleep(relative_time(), philo->info->t_eat); 
+	ft_usleep(relative_time(), philo->info->t_eat);
 	//먹는 순간 업데이트를 하고 시간을 흘려보내는 방식으로 변경
 }
 
