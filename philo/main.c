@@ -6,7 +6,7 @@
 /*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 21:10:01 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/19 21:15:38 by sohyupar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@ static int	in_monitor(t_philo *philo)
 			pthread_mutex_unlock(&(philo->info)->philo_mutex);
 			return (1);
 		}
-		if (philo->info->must_eat == (&philo[i])[0].amount_eat)
-		{
-			// print_msg(philo->info->start_time, &philo[i], EAT);
-			// philo->info->end_flag = 2;
-			pthread_mutex_unlock(&(philo->info)->philo_mutex);
-			return (1);
-		}
+		// if (philo->info->must_eat == (&philo[i])[0].amount_eat)
+		// {
+		// 	philo->info->end_flag = 2;
+		// 	pthread_mutex_unlock(&(philo->info)->philo_mutex);
+		// 	return (1);
+		// }
 		pthread_mutex_unlock(&(philo->info)->philo_mutex);
 	}
 	return (0);
@@ -48,14 +47,13 @@ void	monitor(t_philo *philo, pthread_t *table)
 	{
 		if (in_monitor(philo))
 			break ;
-		// pthread_mutex_lock(&(philo->info)->philo_mutex);
-		// usleep(100);
-		// if (philo->info->end_flag == 2)
-		// {
-		// 	pthread_mutex_unlock(&(philo->info)->philo_mutex);
-		// 	break ;
-		// }
-		// pthread_mutex_unlock(&(philo->info)->philo_mutex);
+		pthread_mutex_lock(&(philo->info)->philo_mutex);
+		if (philo->info->end_flag == 2)
+		{
+			pthread_mutex_unlock(&(philo->info)->philo_mutex);
+			break ;
+		}
+		pthread_mutex_unlock(&(philo->info)->philo_mutex);
 	}
 	while (++i < philo[0].info->num)
 		pthread_join(table[i], NULL);
