@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suhwpark <suhwpark@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 17:50:28 by sohyupar          #+#    #+#             */
-/*   Updated: 2023/04/20 15:58:06 by suhwpark         ###   ########.fr       */
+/*   Created: 2023/04/19 17:50:28 by yongmipa          #+#    #+#             */
+/*   Updated: 2023/04/20 17:28:07 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
