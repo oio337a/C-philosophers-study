@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suhwpark <suhwpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 17:21:30 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 21:10:05 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:18:39 by suhwpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,19 @@ int	validate_info(int ac, char **av, t_info *info)
 	info->t_sleep = ft_atoi(av[4]);
 	info->must_eat = 0;
 	info->end_flag = 0;
+	info->meals = 0;
 	if (ac == 6)
 	{
 		info->must_eat = ft_atoi(av[5]);
 		if (info->must_eat <= 0)
 			return (0);
 	}
+	else
+		info->must_eat = 0;
 	if (info->num <= 0 || info->t_die > MAX_INT || info->t_eat > MAX_INT
 		|| info->t_sleep > MAX_INT || info->must_eat < 0)
 		return (0);
 	pthread_mutex_init(&(info->philo_print), NULL);
 	pthread_mutex_init(&(info->philo_mutex), NULL);
-
 	return (1);
 }

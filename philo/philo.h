@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suhwpark <suhwpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 21:10:02 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:14:28 by suhwpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_info
 	int				must_eat;
 	MS				start_time;
 	int				end_flag;// 철학자 죽었을 때 0으로 만들어서 출력 불가
+	int				meals;
 	pthread_mutex_t	philo_mutex;  // 철학자들 감시
 	pthread_mutex_t	*forks; // 포크들
 	pthread_mutex_t	philo_print;
@@ -63,22 +64,22 @@ typedef struct s_philo
 	int				amount_eat;
 	pthread_mutex_t	*lfork;
 	pthread_mutex_t	*rfork;
-	t_info	*info;
+	t_info			*info;
 }	t_philo;
 
 // size_t	relative_time(size_t time_start);
-MS		relative_time(void);
-int		validate_info(int ac, char **av, t_info *info);
-void	*ft_free(t_info *info, t_philo *philo);
-void	*routine(t_philo *philo);
-void	print_msg(MS seconds, t_philo *philo, char *msg);
-void	ft_usleep(MS time, MS finish);
-MS		get_time(MS start);
-int		is_dead(t_info *info);
-void	free_philo(t_philo *philo);
+MS				relative_time(void);
+int				validate_info(int ac, char **av, t_info *info);
+void			*ft_free(t_info *info, t_philo *philo);
+void			*routine(t_philo *philo);
+void			print_msg(MS seconds, t_philo *philo, char *msg);
+void			ft_usleep(MS time, MS finish);
+MS				get_time(MS start);
+int				is_dead(t_info *info);
+void			free_philo(t_philo *philo);
 pthread_mutex_t	*make_forks(t_info *info);
-t_philo	*sit_philo(t_info *info, pthread_mutex_t *forks);
-t_philo	*set_philo(t_info *info);
-void	input_philo(t_info *info, t_philo *philos, pthread_t *table);
-void	monitor(t_philo *philo, pthread_t *table);
+t_philo			*sit_philo(t_info *info, pthread_mutex_t *forks);
+t_philo			*set_philo(t_info *info);
+void			input_philo(t_info *info, t_philo *philos, pthread_t *table);
+void			monitor(t_philo *philo, pthread_t *table);
 #endif
