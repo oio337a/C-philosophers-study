@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suhwpark <suhwpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 21:15:38 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/20 16:07:25 by suhwpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,6 @@ static int	in_monitor(t_philo *philo)
 			pthread_mutex_unlock(&(philo->info)->philo_mutex);
 			return (1);
 		}
-		// if (philo->info->must_eat == (&philo[i])[0].amount_eat)
-		// {
-		// 	philo->info->end_flag = 2;
-		// 	pthread_mutex_unlock(&(philo->info)->philo_mutex);
-		// 	return (1);
-		// }
 		pthread_mutex_unlock(&(philo->info)->philo_mutex);
 	}
 	return (0);
@@ -87,6 +81,5 @@ int	main(int ac, char **av)
 	if (!phillo_in_table)
 		return (-1);
 	input_philo(&info, philo, phillo_in_table);
-	// free_philo(philo);
 	return (0);
 }

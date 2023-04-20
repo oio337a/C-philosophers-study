@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sohyupar <sohyupar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suhwpark <suhwpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:14:09 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/19 21:16:34 by sohyupar         ###   ########.fr       */
+/*   Updated: 2023/04/20 16:09:44 by suhwpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,6 @@ void	*ft_free(t_info *info, t_philo *philo)
 	return (NULL);
 }
 
-void	free_philo(t_philo *philo)
-{
-	int	i;
-
-	i = -1;
-	while (++i < philo[0].info->num)
-		free(&philo[i]);
-	free(philo);
-}
-
 void	print_msg(MS seconds, t_philo *philo, char *msg)
 {
 	MS	time;
@@ -60,9 +50,9 @@ void	print_msg(MS seconds, t_philo *philo, char *msg)
 		pthread_mutex_unlock(&(philo->info)->philo_print);
 		return ;
 	}
-	printf("%llu %d %s\n", time, philo->p_index, msg);
-	// printf("\033[0m");
+	printf("%llu	%d %s\n", time, philo->p_index, msg);
 	pthread_mutex_unlock(&(philo->info)->philo_print);
+	printf("\033[0m");
 }
 
 MS	get_time(MS start)

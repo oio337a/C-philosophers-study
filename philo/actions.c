@@ -6,7 +6,7 @@
 /*   By: suhwpark <suhwpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:01 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/20 15:17:17 by suhwpark         ###   ########.fr       */
+/*   Updated: 2023/04/20 16:05:46 by suhwpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ static void	check_number_of_meals(t_philo *philo)
 {
 	if (!philo->info->must_eat)
 		return ;
-	philo->amount_eat++;
+	++(philo->amount_eat);
 	if (philo->amount_eat == philo->info->must_eat)
 	{
-		pthread_mutex_lock(&(philo->info)->philo_mutex);
-		philo->info->meals++;
+		pthread_mutex_lock(&(philo->info->philo_mutex));
+		++(philo->info->meals);
 		if (philo->info->meals == philo->info->num)
 			philo->info->end_flag = 2;
-		pthread_mutex_unlock(&(philo->info)->philo_mutex);
+		pthread_mutex_unlock(&(philo->info->philo_mutex));
 	}
 	return ;
 }
@@ -36,18 +36,10 @@ static void	eating(t_philo *philo)
 	print_msg(philo->info->start_time, philo, PICK);
 	print_msg(philo->info->start_time, philo, EATING);
 	pthread_mutex_lock(&(philo->info)->philo_mutex);
-	// philo->amount_eat += 1;
-	// if (philo->info->must_eat == philo->amount_eat)
-	// {
-	// 	philo->info->end_flag = 2;
-	// 	pthread_mutex_unlock(&(philo->info)->philo_mutex);
-	// 	return ;
-	// }
 	philo->last_eating = relative_time();
 	pthread_mutex_unlock(&(philo->info)->philo_mutex);
 	check_number_of_meals(philo);
 	ft_usleep(relative_time(), philo->info->t_eat);
-	//먹는 순간 업데이트를 하고 시간을 흘려보내는 방식으로 변경
 }
 
 static void	sleeping(t_philo *philo)

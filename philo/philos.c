@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: suhwpark <suhwpark@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 17:50:28 by sohyupar          #+#    #+#             */
-/*   Updated: 2023/04/19 21:23:46 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/20 15:58:06 by suhwpark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	input_philo(t_info *info, t_philo *philos, pthread_t *table)
 		if (!(i % 2))
 			pthread_create(&table[i], 0, (void *)routine, &philos[i]);
 	}
-	usleep(100);
+	usleep(((info->t_eat) / 2 * 1000) + 200);
 	i = -1;
 	while (++i < info->num)
 	{
