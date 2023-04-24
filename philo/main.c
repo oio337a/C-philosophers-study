@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/20 17:27:04 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/24 14:53:20 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ static int	in_monitor(t_philo *philo)
 	int	i;
 
 	i = -1;
-	while (++i < philo->info->num)
+	while (++i < philo[0].info->num)
 	{
-		pthread_mutex_lock(&(philo->info)->philo_mutex);
-		if (relative_time() - (&philo[i])[0].last_eating >= philo->info->t_die)
+		pthread_mutex_lock(&philo[i].info->philo_mutex);
+		if (relative_time() - philo[i].last_eating >= philo->info->t_die)
 		{
 			print_msg(philo->info->start_time, &philo[i], DIED);
 			philo->info->end_flag = 1;
-			pthread_mutex_unlock(&(philo->info)->philo_mutex);
+			pthread_mutex_unlock(&philo[i].info->philo_mutex);
 			return (1);
 		}
-		pthread_mutex_unlock(&(philo->info)->philo_mutex);
+		pthread_mutex_unlock(&philo[i].info->philo_mutex);
 	}
 	return (0);
 }
@@ -39,6 +39,7 @@ void	monitor(t_philo *philo, pthread_t *table)
 	i = -1;
 	while (1)
 	{
+		usleep(1000);
 		if (in_monitor(philo))
 			break ;
 		pthread_mutex_lock(&(philo->info)->philo_mutex);

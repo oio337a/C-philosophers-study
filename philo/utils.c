@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:14:09 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/20 17:27:24 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/24 14:53:47 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	print_msg(MS seconds, t_philo *philo, char *msg)
 
 	pthread_mutex_lock(&(philo->info)->philo_print);
 	time = relative_time() - seconds;
-	usleep(50);
 	if (philo->info->end_flag)
 	{
 		pthread_mutex_unlock(&(philo->info)->philo_print);
@@ -52,7 +51,6 @@ void	print_msg(MS seconds, t_philo *philo, char *msg)
 	}
 	printf("%llu	%d %s\n", time, philo->p_index, msg);
 	pthread_mutex_unlock(&(philo->info)->philo_print);
-	printf("\033[0m");
 }
 
 MS	get_time(MS start)
@@ -66,5 +64,5 @@ MS	get_time(MS start)
 void	ft_usleep(MS time, MS finish)
 {
 	while (get_time(time) < finish)
-		usleep(100);
+		usleep(200);
 }
