@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:30:59 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/27 20:35:54 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/29 19:27:35 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,15 @@ void	print_msg(MS seconds, t_philo *philo, char *msg)
 {
 	MS	time;
 
-	pthread_mutex_lock(&philo->info->philo_check_dead);
-	if (philo->info->end_flag)
-	{
-		pthread_mutex_unlock(&philo->info->philo_check_dead);
-		return ;
-	}
-	pthread_mutex_unlock(&philo->info->philo_check_dead);
-	pthread_mutex_lock(&philo->info->philo_print);
+	pthread_mutex_lock(&philo->info->philo_update_time);
 	time = relative_time() - seconds;
-	printf("%llu	%d %s\n", time, philo->p_index, msg);
-	pthread_mutex_unlock(&philo->info->philo_print);
+	pthread_mutex_unlock(&philo->info->philo_update_time);
+	usleep(100);
+	if (is_dead(philo->info))
+		return ;
+	pthread_mutex_lock(&philo->info->philo_check_dead);
+	printf("%llu	%d %s\n", time, philo->p_index + 1, msg);
+	pthread_mutex_unlock(&philo->info->philo_check_dead);
 }
 
 MS	get_time(MS start)
@@ -62,8 +60,12 @@ MS	get_time(MS start)
 	return (now - start);
 }
 
-void	ft_usleep(MS time, MS finish)
+void	ft_usleep(MS time, MS finish, t_philo *philo)
 {
 	while (get_time(time) < finish)
+	{
+		if (is_dead(philo->info))
+			break ;
 		usleep(200);
+	}
 }

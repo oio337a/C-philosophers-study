@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 17:07:01 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/24 14:53:23 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/29 18:03:26 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void	eating(t_philo *philo)
 	pthread_mutex_lock(philo->rfork);
 	print_msg(philo->info->start_time, philo, PICK);
 	print_msg(philo->info->start_time, philo, EATING);
-	pthread_mutex_lock(&(philo->info)->philo_mutex);
+	pthread_mutex_lock(&(philo->info)->time);
 	philo->last_eating = relative_time();
-	pthread_mutex_unlock(&(philo->info)->philo_mutex);
+	pthread_mutex_unlock(&(philo->info)->time);
 	check_number_of_meals(philo);
 	ft_usleep(relative_time(), philo->info->t_eat);
 }

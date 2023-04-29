@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:31:31 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/27 20:31:24 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/29 20:42:18 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_philo
 	t_info			*info;
 }	t_philo;
 
+void			*routine_2(t_philo *philo);
 MS				relative_time(void);
 MS				get_time(MS start);
 int				validate_info(int ac, char **av, t_info *info);
@@ -67,7 +68,8 @@ int				is_dead(t_info *info);
 void			ft_free(t_info *info, t_philo *philo, pthread_t *table);
 void			*routine(t_philo *philo);
 void			print_msg(MS seconds, t_philo *philo, char *msg);
-void			ft_usleep(MS time, MS finish);
+// void			ft_usleep(MS time, MS finish);
+void			ft_usleep(MS time, MS finish, t_philo *philo);
 void			input_philo(t_info *info, t_philo *philos, pthread_t *table);
 void			monitor(t_philo *philo, pthread_t *table);
 t_philo			*sit_philo(t_info *info, pthread_mutex_t *forks,

@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:31:52 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/27 20:28:07 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/29 20:42:07 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	input_philo(t_info *info, t_philo *philos, pthread_t *table)
 	int	i;
 
 	i = -1;
+	info->start_time = relative_time();
 	while (++i < info->num)
 	{
 		pthread_mutex_lock(&(info->philo_mutex));
@@ -95,10 +96,11 @@ void	input_philo(t_info *info, t_philo *philos, pthread_t *table)
 		if (!(i % 2))
 			pthread_create(&table[i], 0, (void *)routine, &philos[i]);
 	}
-	usleep(100);
+	// usleep((info->num / 2) * 1000);
+	usleep(500);
 	i = -1;
 	while (++i < info->num)
 		if (i % 2)
-			pthread_create(&table[i], 0, (void *)routine, &philos[i]);
+			pthread_create(&table[i], 0, (void *)routine_2, &philos[i]);
 	monitor(philos, table);
 }

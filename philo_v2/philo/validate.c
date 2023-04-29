@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:32:00 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/27 16:18:12 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/29 17:52:07 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static int	ft_atoi(char *str)
 
 int	validate_info(int ac, char **av, t_info *info)
 {
-	info->start_time = relative_time();
 	info->num = ft_atoi(av[1]);
 	info->t_die = ft_atoi(av[2]);
 	info->t_eat = ft_atoi(av[3]);

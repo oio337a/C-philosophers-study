@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:31:07 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/27 16:21:59 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/04/29 18:37:42 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	one_philo(t_philo *philo, t_info *info)
 {
 	print_msg(info->start_time, philo, PICK);
-	ft_usleep(info->start_time, info->t_die);
+	ft_usleep(info->start_time, info->t_die, philo);
 	print_msg(info->start_time, philo, DIED);
 	ft_free(info, philo, 0);
 	return (0);
