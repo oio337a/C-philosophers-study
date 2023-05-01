@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 17:50:28 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/24 14:53:43 by yongmipa         ###   ########seoul.kr  */
+/*   Created: 2023/04/26 11:31:52 by yongmipa          #+#    #+#             */
+/*   Updated: 2023/05/01 22:17:21 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,11 @@ t_philo	*set_philo(t_info *info)
 
 	info->forks = make_forks(info);
 	if (!info->forks)
-	{
-		ft_free(info, NULL);
 		return (NULL);
-	}
 	philo = sit_philo(info, info->forks);
 	if (!philo)
 	{
-		ft_free(info, NULL);
+		free(info->forks);
 		return (NULL);
 	}
 	return (philo);
@@ -79,12 +76,10 @@ void	input_philo(t_info *info, t_philo *philos, pthread_t *table)
 		if (!(i % 2))
 			pthread_create(&table[i], 0, (void *)routine, &philos[i]);
 	}
-	usleep(((info->t_eat) / 2 * 1000) + 200);
+	usleep(200);
 	i = -1;
 	while (++i < info->num)
-	{
 		if (i % 2)
 			pthread_create(&table[i], 0, (void *)routine, &philos[i]);
-	}
 	monitor(philos, table);
 }

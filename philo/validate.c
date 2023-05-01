@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/06 17:21:30 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/24 14:53:50 by yongmipa         ###   ########seoul.kr  */
+/*   Created: 2023/04/26 11:32:00 by yongmipa          #+#    #+#             */
+/*   Updated: 2023/05/01 22:17:31 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ int	validate_info(int ac, char **av, t_info *info)
 		return (0);
 	pthread_mutex_init(&(info->philo_print), NULL);
 	pthread_mutex_init(&(info->philo_mutex), NULL);
+	pthread_mutex_init(&(info->philo_check_dead), NULL);
 	return (1);
 }

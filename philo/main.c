@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/03 15:21:34 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/24 14:53:20 by yongmipa         ###   ########seoul.kr  */
+/*   Created: 2023/04/26 11:31:07 by yongmipa          #+#    #+#             */
+/*   Updated: 2023/05/01 22:17:09 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,26 @@
 static int	in_monitor(t_philo *philo)
 {
 	int	i;
+	MS	time;
 
 	i = -1;
 	while (++i < philo[0].info->num)
 	{
+		if (is_dead(philo[i].info))
+			return (1);
 		pthread_mutex_lock(&philo[i].info->philo_mutex);
-		if (relative_time() - philo[i].last_eating >= philo->info->t_die)
+		time = philo[i].last_eating;
+		pthread_mutex_unlock(&philo[i].info->philo_mutex);
+		if (relative_time() - time >= philo->info->t_die)
 		{
-			print_msg(philo->info->start_time, &philo[i], DIED);
+			pthread_mutex_lock(&philo[i].info->philo_check_dead);
 			philo->info->end_flag = 1;
-			pthread_mutex_unlock(&philo[i].info->philo_mutex);
+			pthread_mutex_unlock(&philo[i].info->philo_check_dead);
+			printf("%llu	%d %s\n",
+				relative_time() - philo[i].info->start_time,
+				philo[i].p_index + 1, DIED);
 			return (1);
 		}
-		pthread_mutex_unlock(&philo[i].info->philo_mutex);
 	}
 	return (0);
 }
@@ -39,16 +46,8 @@ void	monitor(t_philo *philo, pthread_t *table)
 	i = -1;
 	while (1)
 	{
-		usleep(1000);
 		if (in_monitor(philo))
 			break ;
-		pthread_mutex_lock(&(philo->info)->philo_mutex);
-		if (philo->info->end_flag == 2)
-		{
-			pthread_mutex_unlock(&(philo->info)->philo_mutex);
-			break ;
-		}
-		pthread_mutex_unlock(&(philo->info)->philo_mutex);
 	}
 	while (++i < philo[0].info->num)
 		pthread_join(table[i], NULL);
@@ -57,9 +56,9 @@ void	monitor(t_philo *philo, pthread_t *table)
 static int	one_philo(t_philo *philo, t_info *info)
 {
 	print_msg(info->start_time, philo, PICK);
-	ft_usleep(info->start_time, info->t_die);
+	ft_usleep(info->start_time, info->t_die, philo);
 	print_msg(info->start_time, philo, DIED);
-	ft_free(info, philo);
+	ft_free(info, philo, 0);
 	return (0);
 }
 
@@ -82,5 +81,6 @@ int	main(int ac, char **av)
 	if (!phillo_in_table)
 		return (-1);
 	input_philo(&info, philo, phillo_in_table);
+	ft_free(&info, philo, phillo_in_table);
 	return (0);
 }

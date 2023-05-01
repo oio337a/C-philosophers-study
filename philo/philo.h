@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/03 15:24:46 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/04/24 14:53:41 by yongmipa         ###   ########seoul.kr  */
+/*   Created: 2023/04/26 11:31:31 by yongmipa          #+#    #+#             */
+/*   Updated: 2023/05/01 22:17:17 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@
 # include <sys/time.h>
 
 # define MS			unsigned long long
-# define FORK		0
-# define EAT		1
-# define SLEEP		2
-# define THINK		3
-# define DIE		4
-
 # define MAX_INT	2147483647
 # define MIN_INT	-2147483648
 
@@ -49,6 +43,7 @@ typedef struct s_info
 	pthread_mutex_t	philo_mutex;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	philo_print;
+	pthread_mutex_t	philo_check_dead;
 }	t_info;
 
 typedef struct s_philo
@@ -65,10 +60,10 @@ MS				relative_time(void);
 MS				get_time(MS start);
 int				validate_info(int ac, char **av, t_info *info);
 int				is_dead(t_info *info);
-void			*ft_free(t_info *info, t_philo *philo);
+void			ft_free(t_info *info, t_philo *philo, pthread_t *table);
 void			*routine(t_philo *philo);
 void			print_msg(MS seconds, t_philo *philo, char *msg);
-void			ft_usleep(MS time, MS finish);
+void			ft_usleep(MS time, MS finish, t_philo *philo);
 void			input_philo(t_info *info, t_philo *philos, pthread_t *table);
 void			monitor(t_philo *philo, pthread_t *table);
 t_philo			*sit_philo(t_info *info, pthread_mutex_t *forks);
