@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:30:59 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/05/01 22:17:25 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/05/02 15:17:10 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ void	print_msg(MS seconds, t_philo *philo, char *msg)
 {
 	MS	time;
 
-	usleep(100);
-	if (is_dead(philo->info))
-		return ;
 	pthread_mutex_lock(&philo->info->philo_print);
+	if (is_dead(philo->info))
+		return ((void)pthread_mutex_unlock(&philo->info->philo_print));
 	time = relative_time() - seconds;
 	printf("%llu	%d %s\n", time, philo->p_index + 1, msg);
 	pthread_mutex_unlock(&philo->info->philo_print);

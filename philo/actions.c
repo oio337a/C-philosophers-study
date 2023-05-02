@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:31:23 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/05/01 22:17:04 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/05/02 15:20:44 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ static void	eating(t_philo *philo)
 	pthread_mutex_lock(philo->lfork);
 	print_msg(philo->info->start_time, philo, PICK);
 	pthread_mutex_lock(philo->rfork);
-	if (is_dead(philo->info))
-		return ;
 	print_msg(philo->info->start_time, philo, PICK);
 	print_msg(philo->info->start_time, philo, EATING);
 	pthread_mutex_lock(&philo->info->philo_mutex);
@@ -58,8 +56,6 @@ static void	sleeping(t_philo *philo)
 		return ;
 	print_msg(philo->info->start_time, philo, SLEEPING);
 	ft_usleep(relative_time(), philo->info->t_sleep, philo);
-	if (is_dead(philo->info))
-		return ;
 	print_msg(philo->info->start_time, philo, THINKING);
 }
 

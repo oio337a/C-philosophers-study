@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:31:07 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/05/01 22:17:09 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/05/02 15:13:53 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ static int	in_monitor(t_philo *philo)
 			pthread_mutex_lock(&philo[i].info->philo_check_dead);
 			philo->info->end_flag = 1;
 			pthread_mutex_unlock(&philo[i].info->philo_check_dead);
+			pthread_mutex_lock(&philo[i].info->philo_print);
 			printf("%llu	%d %s\n",
 				relative_time() - philo[i].info->start_time,
 				philo[i].p_index + 1, DIED);
+			pthread_mutex_unlock(&philo[i].info->philo_print);
 			return (1);
 		}
 	}
