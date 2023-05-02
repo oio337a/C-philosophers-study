@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:31:07 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/05/02 15:39:33 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/05/02 16:02:31 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	in_monitor(t_philo *philo)
 	int	i;
 	MS	time;
 
-	i = -1;
+	i = 1;
 	while (++i < philo[0].info->num)
 	{
 		if (is_dead(philo[i].info))
@@ -45,7 +45,7 @@ void	monitor(t_philo *philo, pthread_t *table)
 {
 	int	i;
 
-	i = -1;
+	i = 1;
 	while (1)
 	{
 		if (in_monitor(philo))
@@ -71,17 +71,20 @@ int	main(int ac, char **av)
 	pthread_t	*phillo_in_table;
 
 	if (ac < 5 || ac > 6)
-		return (-1);
+		return (1);
 	if (!validate_info(ac, av, &info))
-		return (-1);
+		return (1);
 	philo = set_philo(&info);
 	if (!philo)
-		return (-1);
+		return (1);
 	if (info.num == 1)
 		return (one_philo(philo, &info));
 	phillo_in_table = (pthread_t *)malloc(sizeof(pthread_t) * info.num);
 	if (!phillo_in_table)
-		return (-1);
+	{
+		ft_free(&info, philo, 0);
+		return (1);
+	}
 	input_philo(&info, philo, phillo_in_table);
 	ft_free(&info, philo, phillo_in_table);
 	return (0);

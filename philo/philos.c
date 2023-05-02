@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:31:52 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/05/01 22:17:21 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/05/02 15:56:51 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,18 @@ t_philo	*set_philo(t_info *info)
 
 	info->forks = make_forks(info);
 	if (!info->forks)
+	{
+		pthread_mutex_destroy(&(info->philo_mutex));
+		pthread_mutex_destroy(&(info->philo_print));
+		pthread_mutex_destroy(&(info->philo_check_dead));
 		return (NULL);
+	}
 	philo = sit_philo(info, info->forks);
 	if (!philo)
 	{
+		pthread_mutex_destroy(&(info->philo_mutex));
+		pthread_mutex_destroy(&(info->philo_print));
+		pthread_mutex_destroy(&(info->philo_check_dead));
 		free(info->forks);
 		return (NULL);
 	}
