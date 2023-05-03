@@ -6,7 +6,7 @@
 /*   By: yongmipa <yongmipa@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 11:31:07 by yongmipa          #+#    #+#             */
-/*   Updated: 2023/05/02 16:02:31 by yongmipa         ###   ########seoul.kr  */
+/*   Updated: 2023/05/03 17:40:16 by yongmipa         ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	in_monitor(t_philo *philo)
 	int	i;
 	MS	time;
 
-	i = 1;
+	i = -1;
 	while (++i < philo[0].info->num)
 	{
 		if (is_dead(philo[i].info))
@@ -45,7 +45,7 @@ void	monitor(t_philo *philo, pthread_t *table)
 {
 	int	i;
 
-	i = 1;
+	i = -1;
 	while (1)
 	{
 		if (in_monitor(philo))
